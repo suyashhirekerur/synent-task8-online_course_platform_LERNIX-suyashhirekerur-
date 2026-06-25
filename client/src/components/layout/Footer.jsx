@@ -1,0 +1,1 @@
+import React from 'react'; export default function Footer() { return (<footer className="glass py-8 mt-12 border-t border-white/5"><div className="container mx-auto text-center text-gray-400"><p>&copy; {new Date().getFullYear()} CourseApp. All rights reserved.</p></div></footer>); }
