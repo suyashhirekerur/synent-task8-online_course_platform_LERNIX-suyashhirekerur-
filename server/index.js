@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from 'dotenv';
 import { connectDB } from "./database/db.js";
 import userRoutes from "./routes/user.js";
+import adminRoutes from "./routes/admin.js";
+import courseRoutes from "./routes/course.js";
 
 dotenv.config();
 
@@ -17,8 +19,11 @@ app.get("/", () => {
     
 });
 
+app.use("/uploads", express.static("uploads"))
 
 app.use("/api", userRoutes);
+app.use("/api", adminRoutes);
+app.use("/api", courseRoutes);
 
 
 app.listen(port, () => {

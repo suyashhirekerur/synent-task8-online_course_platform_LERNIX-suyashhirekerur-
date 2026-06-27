@@ -29,9 +29,9 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    createdBy: {
+    createdAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
 });
 
