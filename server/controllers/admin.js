@@ -97,7 +97,7 @@ export const deleteCourse = TryCatch(async (req, res) => {
     });
 });
 
-export const getAllStats= TryCatch(async(req, res)=> {
+export const getAllStats = TryCatch(async (req, res) => {
     const totalCourses = (await Courses.find()).length;
     const totalLectures = (await Lecture.find()).length;
     const totalUsers = (await User.find()).length;

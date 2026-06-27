@@ -67,7 +67,7 @@ export const checkOut = TryCatch(async (req, res) => {
 
     if (user.subscription.includes(course._id)) {
         return res.status(400).json({
-            message: "You already ahve this course",
+            message: "You already have this course",
         });
     }
 
