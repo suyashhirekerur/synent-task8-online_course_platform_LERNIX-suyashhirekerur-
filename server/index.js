@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.js";
 import adminRoutes from "./routes/admin.js";
 import courseRoutes from "./routes/course.js";
 import Razorpay from "razorpay";
+import cors from "cors";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const app = express();
 
 // using middlewares
 app.use(express.json());
+app.use(cors());
 
 const port = process.env.PORT;
 
