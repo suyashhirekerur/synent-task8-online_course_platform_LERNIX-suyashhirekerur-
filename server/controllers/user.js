@@ -1,54 +1,106 @@
 import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import sendMail from "../middlewares/sendMail.js"
+import TryCatch from "../middlewares/Trycatch.js"
 
 
-export const register = async () => {
-    try {
-        const { email, name, password } = req.body
+export const register = TryCatch(async (req, res) => {
+    const { email, name, password } = req.body
 
-        let user = await User.findOne({email}) //finds the user with the email
-        if (user) return res.status(400).json( {
-            message: "User already exists",
-        });
+    let user = await User.findOne({ email }) //finds the user with the email
+    if (user) return res.status(400).json({
+        message: "User already exists",
+    });
 
-        const hashPassword = await bcrypt.hash(password, 10)
+    const hashPassword = await bcrypt.hash(password, 10)
 
-        //saving user credentials
-        user = {
-            name,
-            email,
-            password: hashPassword,
-        }
-
-        const otp = Math.floor(Math.random() * 1000000)
-
-        const activationToken = jwt.sign({
-            user,
-            otp,
-        }, process.env.Activation_Secret, {
-            expiresIn: "5m",
-        });
-
-        const data = {
-            name,
-            otp,
-        }
-
-        await sendMail(
-            email,
-            "Lernix",
-            data,
-        )
-
-        res.status(200).json({
-            message: "OTP has been sent to your email.",
-            activationToken,
-        })
-    } catch (error) {
-        res.status(500).json({
-            message: error.message,
-        });
-
+    //saving user credentials
+    user = {
+        name,
+        email,
+        password: hashPassword,
     }
-}
+
+    const otp = Math.floor(Math.random() * 1000000)
+
+    const activationToken = jwt.sign({
+        user,
+        otp,
+    }, process.env.Activation_Secret, {
+        expiresIn: "5m",
+    });
+
+    const data = {
+        name,
+        otp,
+    }
+
+    await sendMail(
+        email,
+        "Lernix",
+        data,
+    )
+
+    res.status(200).json({
+        message: "OTP has been sent to your email.",
+        activationToken,
+    })
+
+})
+
+export const verifyUser = TryCatch(async (req, res) => {
+    const { otp, activationToken } = req.body
+
+    const verify = jwt.verify(activationToken, process.env.Activation_Secret)  // Verifies whether the activation token is correct or not
+
+    if (!verify) return res.status(400).json({
+        message: "OTP Expired",
+    });
+
+    if (verify.otp !== otp) return res.status(400).json({
+        message: "Wrong OTP",
+    });
+
+    await User.create({
+        name: verify.user.name,
+        email: verify.user.email,
+        password: verify.user.password,
+    });
+
+    res.json({
+        message: "User Registered",
+    })
+});
+
+export const loginUser = TryCatch(async (req, res) => {
+    const { email, password } = req.body
+
+    const existingUser = await User.findOne({ email })
+
+    if (!existingUser) return res.status(400).json({
+        message: "No user found with this email!"
+    })
+
+    const matchPassword = await bcrypt.compare(password, existingUser.password);
+
+    if (!matchPassword) return res.status(400).json({
+        message: "Wrong Password"
+    })
+
+    const token = await jwt.sign({ _id: existingUser._id }, process.env.Jwt_Sec, {
+        expiresIn: "15d",
+    });
+
+    res.json({
+        message: `Welcome back ${existingUser.name}`,
+        token,
+        user: existingUser,
+    })
+});
+
+export const myProfile = TryCatch(async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    res.json({ user });
+})

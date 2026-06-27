@@ -18,7 +18,7 @@ app.get("/", () => {
 });
 
 
-app.post("/api/user/register", userRoutes);
+app.use("/api", userRoutes);
 
 
 app.listen(port, () => {
