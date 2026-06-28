@@ -7,20 +7,27 @@ import Login from './pages/auth/Login.jsx';
 import Register from './pages/auth/Register.jsx';
 import Verify from './pages/auth/Verify.jsx';
 import Footer from './components/footer/Footer.jsx';
+import About from './pages/about/About.jsx';
+import Account from './pages/account/Account.jsx';
+import { UserData } from './context/User.jsx';
 
 const App = () => {
-  return <>
+  const { isAuth, user } = UserData();
+
+  return (
     <BrowserRouter>
-      <Header />
+      <Header isAuth={isAuth} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/verify' element={<Verify />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/account" element={isAuth ? <Account user={user} /> : <Login />} />
+        <Route path='/login' element={isAuth ? <Home /> : <Login />} />
+        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
+        <Route path='/verify' element={isAuth ? <Home /> : <Verify />} />
       </Routes>
       <Footer />
     </BrowserRouter>
-  </>
+  );
 }
 
 export default App
