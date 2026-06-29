@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './auth.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserData } from '../../context/User';
 
 
 const Verify = () => {
@@ -14,7 +15,7 @@ const Verify = () => {
     
   }
   return (
-    <div className="auth-page">
+    <div className="auth-name">
       <div className="auth-form">
         <h2>Verify Account</h2>
         <form onSubmit={submitHandler}>

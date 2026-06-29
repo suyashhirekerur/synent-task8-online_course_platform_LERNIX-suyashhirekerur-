@@ -1,8 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import axios from 'axios';
 import { server } from "../config";
 import { toast, Toaster } from 'react-hot-toast'
-import { useEffect } from "react";
 
 const UserContext = createContext()
 
@@ -11,6 +10,32 @@ export const UserContextProvider = ({ children }) => {
     const [isAuth, setIsAuth] = useState(false);
     const [btnLoading, setBtnLoading] = useState(false);
     const [loading, setloading] = useState(true);
+
+    const fetchUser = async () => {
+        try {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                throw new Error("No token found");
+            }
+
+            const { data } = await axios.get(`${server}/api/user/me`, {
+                headers: {
+                    token,
+                },
+                timeout: 3000,
+            });
+
+            setIsAuth(true);
+            setUser(data.user);
+            setloading(false);
+        } catch (error) {
+            console.log(error);
+            setIsAuth(false);
+            setUser(null);
+            setloading(false);
+        }
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -22,41 +47,9 @@ export const UserContextProvider = ({ children }) => {
             }
         }, 1500);
 
-        const fetchUser = async () => {
-            try {
-                const token = localStorage.getItem("token");
-
-                if (!token) {
-                    throw new Error("No token found");
-                }
-
-                await axios.get(`${server}/api/user/me`, {
-                    headers: {
-                        token,
-                    },
-                    timeout: 3000,
-                });
-
-                if (!cancelled) {
-                    setIsAuth(true);
-                    setUser(true);
-                    setloading(false);
-                }
-            } catch (error) {
-                console.log(error);
-                if (!cancelled) {
-                    setIsAuth(false);
-                    setUser(null);
-                    setloading(false);
-                }
-            } finally {
-                if (!cancelled) {
-                    clearTimeout(fallbackTimer);
-                }
-            }
-        };
-
-        fetchUser();
+        if (!cancelled) {
+            fetchUser();
+        }
 
         return () => {
             cancelled = true;
@@ -97,7 +90,7 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
-    async function verifyOtp(otp) {
+    async function verifyOtp(otp, navigate) {
 
         setBtnLoading(true)
         const activationToken = localStorage.getItem("activationToken");
@@ -115,7 +108,7 @@ export const UserContextProvider = ({ children }) => {
         }
     }
 
-    return <UserContext.Provider value={{ user, setUser, setIsAuth, isAuth, loginUser, btnLoading, loading, registerUser, verifyOtp, }}>
+    return <UserContext.Provider value={{ user, setUser, setIsAuth, isAuth, loginUser, btnLoading, loading, registerUser, verifyOtp, fetchUser, }}>
         {children}
         <Toaster />
     </UserContext.Provider>

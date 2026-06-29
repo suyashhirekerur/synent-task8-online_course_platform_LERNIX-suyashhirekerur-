@@ -1,5 +1,6 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import axios from "axios";
+import { server } from "../config";
 
 const CourseContext = createContext()
 
