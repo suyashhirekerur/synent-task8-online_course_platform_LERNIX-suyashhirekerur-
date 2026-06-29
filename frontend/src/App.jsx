@@ -23,9 +23,10 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/account" element={isAuth ? <Account user={user} /> : <Login />} />
-        <Route path='/login' element={isAuth ? <Home /> : <Login />} />
-        <Route path='/register' element={isAuth ? <Home /> : <Register />} />
-        <Route path='/verify' element={isAuth ? <Home /> : <Verify />} />
+        <Route path="/login" element={isAuth ? <Home /> : <Login />} />
+        <Route path="/register" element={isAuth ? <Home /> : <Register />} />
+        <Route path="/verify" element={isAuth ? <Home /> : <Verify />} />
+        <Route path="/course/:id" element={isAuth ? <CourseDescription user={user}/> : <Login />} />
       </Routes>
       <Footer />
     </BrowserRouter>
