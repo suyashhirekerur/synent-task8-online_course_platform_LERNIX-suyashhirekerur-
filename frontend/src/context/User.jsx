@@ -108,6 +108,7 @@ export const UserContextProvider = ({ children }) => {
             navigate("/login");
             setBtnLoading(false);
             localStorage.clear();
+            setBtnLoading(false);
         } catch (error) {
             setBtnLoading(false);
             toast.error(error.response.data.message);

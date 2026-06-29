@@ -10,6 +10,7 @@ import Footer from './components/footer/Footer.jsx';
 import About from './pages/about/About.jsx';
 import Account from './pages/account/Account.jsx';
 import { UserData } from './context/User.jsx';
+import Courses from './pages/courses/Courses.jsx';
 
 const App = () => {
   const { isAuth, user } = UserData();
@@ -20,6 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/courses" element={<Courses />} />
         <Route path="/account" element={isAuth ? <Account user={user} /> : <Login />} />
         <Route path='/login' element={isAuth ? <Home /> : <Login />} />
         <Route path='/register' element={isAuth ? <Home /> : <Register />} />
