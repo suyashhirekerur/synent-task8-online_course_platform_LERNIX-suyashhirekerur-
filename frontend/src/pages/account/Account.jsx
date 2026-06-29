@@ -11,7 +11,7 @@ const Account = (user) => {
 
     const navigate = useNavigate();
 
-    const logoutHandler = ()=> {
+    const logoutHandler = () => {
         localStorage.clear();
         setUser([])
         setIsAuth(false)
@@ -30,11 +30,23 @@ const Account = (user) => {
                             <strong>Email - {user.email}</strong>
                         </p>
 
-                        <button onClick={()=>navigate(`${user._id}/dashboard`)} className="common-btn">
+                        <button onClick={() => navigate(`${user._id}/dashboard`)} className="common-btn">
                             <RiDashboardHorizontalFill />
                             Dashboard
                         </button>
                         <br />
+
+                        {
+                            user.role === "admin" && (
+                                <button onClick={() => navigate(`/admin/dashboard`)} className="common-btn">
+                                    <RiDashboardHorizontalFill />
+                                    Admin Dashboard
+                                </button>
+                            )
+                        }
+
+                        <br />
+
                         <button onClick={logoutHandler} className="common-btn" style={{ background: "red" }}>
                             <IoMdLogOut />
                             Logout
