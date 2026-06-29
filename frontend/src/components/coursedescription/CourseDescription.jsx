@@ -15,7 +15,7 @@ const CourseDescription = ({ user }) => {
 
     const [loading, setLoading] = useState(false)
 
-    const { fetchCourse, course, fetchCourses } = CourseData()
+    const { fetchCourse, course, fetchCourses, fetchMyCourse } = CourseData()
 
     const { fetchUser } = UserData()
     useEffect(() => {
@@ -60,6 +60,7 @@ const CourseDescription = ({ user }) => {
 
                     await fetchUser();
                     await fetchCourses();
+                    await fetchMyCourse();
                     toast.success(data.message);
                     setLoading(false)
                     navigate(`/payment-success/${razorpay_payment_id}`)

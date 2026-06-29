@@ -13,6 +13,9 @@ import { UserData } from './context/User.jsx';
 import Courses from './pages/courses/Courses.jsx';
 import CourseDescription from './components/coursedescription/CourseDescription.jsx';
 import PaymentSuccess from './pages/paymentsuccess/PaymentSuccess.jsx';
+import DashBoard from './pages/dashboard/DashBoard.jsx';
+import CourseStudy from './pages/coursestudy/CourseStudy.jsx';
+import Lecture from './pages/lecture/Lecture.jsx';
 
 const App = () => {
   const { isAuth, user } = UserData();
@@ -30,6 +33,9 @@ const App = () => {
         <Route path="/verify" element={isAuth ? <Home /> : <Verify />} />
         <Route path="/course/:id" element={isAuth ? <CourseDescription user={user}/> : <Login />} />
         <Route path="/payment-success/:id" element={isAuth ? <PaymentSuccess user={user}/> : <Login />} />
+        <Route path="/:id/dashboard" element={isAuth ? <DashBoard user={user}/> : <Login />} />
+        <Route path="/course/study/:id" element={isAuth ? <CourseStudy user={user}/> : <Login />} />
+        <Route path="/lectures/:id" element={isAuth ? <Lecture user={user}/> : <Login />} />
       </Routes>
 
       <Footer />

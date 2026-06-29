@@ -30,7 +30,7 @@ const Account = (user) => {
                             <strong>Email - {user.email}</strong>
                         </p>
 
-                        <button className="common-btn">
+                        <button onClick={()=>navigate(`${user._id}/dashboard`)} className="common-btn">
                             <RiDashboardHorizontalFill />
                             Dashboard
                         </button>
