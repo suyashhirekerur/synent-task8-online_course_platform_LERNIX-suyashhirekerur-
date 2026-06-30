@@ -18,6 +18,7 @@ import CourseStudy from './pages/coursestudy/CourseStudy.jsx';
 import Lecture from './pages/lecture/Lecture.jsx';
 import AdminDashboard from './admin/Dashboard/AdminDashboard.jsx';
 import AdminCourses from './admin/Courses/AdminCourses.jsx';
+import AdminUsers from './admin/Users/AdminUsers.jsx';
 
 const App = () => {
   const { isAuth, user } = UserData();
@@ -46,6 +47,10 @@ const App = () => {
         <Route
           path="/admin/course"
           element={isAuth ? <AdminCourses user={user} /> : <Login />}
+        />
+        <Route
+          path="/admin/users"
+          element={isAuth ? <AdminUsers user={user} /> : <Login />}
         />
       </Routes>
       <Footer />
