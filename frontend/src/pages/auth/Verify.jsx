@@ -2,17 +2,23 @@ import React, { useState } from 'react'
 import './auth.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserData } from '../../context/User';
-
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
-  const {btnLoading, verifyOtp} = UserData();
+  const { btnLoading, verifyOtp } = UserData();
+  const [show, setShow] = useState(false);
   const navigate = useNavigate()
 
-  const submitHandler = async(e) => {
+  function onChange(value) {
+    console.log("Captcha value:", value);
+    setShow(true);
+  }
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     await verifyOtp(Number(otp), navigate);
-    
+
   }
   return (
     <div className="auth-name">
@@ -20,11 +26,17 @@ const Verify = () => {
         <h2>Verify Account</h2>
         <form onSubmit={submitHandler}>
           <label htmlFor="otp">Enter OTP</label>
-          <input type="number" value={otp} onChange={e=>setOtp(e.target.value)
+          <input type="number" value={otp} onChange={e => setOtp(e.target.value)
           } required />
-          <button disabled={btnLoading} type="submit" className='common-btn'>
-            {btnLoading ? "Please Wait..." : "Verify"}
-          </button>
+          <ReCAPTCHA
+            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            onChange={onChange}
+          />
+          {show && (
+            <button disabled={btnLoading} type="submit" className='common-btn'>
+              {btnLoading ? "Please Wait..." : "Verify"}
+            </button>
+          )}
         </form>
         <p>
           Go to <Link to="/login">Login</Link> page
