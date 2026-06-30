@@ -5,6 +5,7 @@ import axios from 'axios';
 import { server } from "../../main"
 import Loading from '../../components/loading/Loading';
 import toast from 'react-hot-toast';
+import { LuBookOpenCheck } from "react-icons/lu";
 
 const Lecture = ({ user }) => {
     const [lectures, setLectures] = useState([])
@@ -114,12 +115,57 @@ const Lecture = ({ user }) => {
         }
     }
 
+    const [completed, setCompleted] = useState("");
+    const [completedLec, setCompletedLec] = useState("");
+    const [lecLength, setLecLength] = useState("");
+    const [progress, setProgress] = useState([]);
+
+    async function fetchProgress() {
+        try {
+            const { data } = await axios.get(`${server}/api/user/progress?course=${params.id}`, {
+                headers: {
+                    token: localStorage.getItem("token"),
+                },
+            });
+
+            setCompleted(data.courseProgressPercentage);
+            setCompletedLec(data.completedLectures);
+            setLecLength(data.allLectures),
+                setProgress(data.progress);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const addProgress = async (id) => {
+        try {
+            const { data } = await axios.post(`${server}/api/user/progress?course=${params.id}&lectureId=${id}`, {}, {
+                headers: {
+                    token: localStorage.getItem("token"),
+                }
+            }
+            );
+            console.log(data.message);
+            fetchProgress();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    console.log(progress);
+
+
     useEffect(() => {
         fetchLectures();
+        fetchProgress();
     }, [])
     return (
         <>
             {loading ? <Loading /> : <>
+                <div className="progress">
+                    Lectures Completed - {completedLec} out of {lecLength} <br />
+                    <progress value={completed} max={100}> </progress> {completed}%
+                </div>
                 <div className="lecture-page">
                     <div className="left">
                         {
@@ -134,6 +180,7 @@ const Lecture = ({ user }) => {
                                             disablePictureInPicture
                                             disableRemotePlayback
                                             autoPlay
+                                            onEnded={() => addProgress(lecture._id)}
                                         ></video>
                                         <h1>{lecture.title}</h1>
                                         <h3>{lecture.description}</h3>
@@ -206,14 +253,29 @@ const Lecture = ({ user }) => {
                                         className={`lecture-number ${lecture._id === e._id && "active"
                                             }`}
                                     >
-                                        {i + 1}. {e.title}
+                                        {i + 1}. {e.title}{" "}
+                                        {progres &&
+                                            progress[0].completedLectures.includes(e._id) && (
+                                                <span
+                                                    style={
+                                                        {
+                                                            background: "green",
+                                                            padding: "2px",
+                                                            borderRadius: "6px",
+                                                            color: "white"
+                                                        }
+                                                    }
+                                                >
+                                                    <LuBookOpenCheck />
+                                                </span>
+                                            )}
                                     </div>
                                     {
                                         user && user.role === "admin" && (
                                             <button
                                                 className="common-btn"
                                                 style={{ backgroundColor: "red" }}
-                                                onClick={()=>deleteHandler(e._id)}
+                                                onClick={() => deleteHandler(e._id)}
                                             >
                                                 Delete {e.title}
                                             </button>

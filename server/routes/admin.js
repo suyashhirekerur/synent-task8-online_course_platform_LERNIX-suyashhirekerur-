@@ -17,7 +17,7 @@ router.post('/courses/:id', isAuth, isAdmin, uploadFiles, addlecture)
 router.delete('/course/:id', isAuth, isAdmin, deleteCourse)
 router.delete('/lecture/:id', isAuth, isAdmin, deleteLecture)
 router.get("/stats", isAuth, isAdmin, getAllStats)
-router.put('/user/:id', isAuth, isAdmin, updateRole)
+router.put('/user/:id', isAuth, updateRole)
 router.get("/users", isAuth, isAdmin, getAllUser)
 
 export default router;

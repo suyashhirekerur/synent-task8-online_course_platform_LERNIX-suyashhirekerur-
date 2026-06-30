@@ -5,8 +5,10 @@ import { AiFillHome } from "react-icons/ai";
 import { FaBook } from 'react-icons/fa';
 import { FaUserAlt } from 'react-icons/fa';
 import { AiOutlineLogout } from "react-icons/ai";
+import { UserData } from '../../context/User';
 
 const Sidebar = () => {
+    const { user } = UserData();
     return (
         <div className="sidebar">
             <ul>
@@ -28,14 +30,18 @@ const Sidebar = () => {
                     </Link>
                 </li>
 
-                <li>
-                    <Link to={'/admin/users'}>
-                        <div className="icons">
-                            <FaUserAlt />
-                        </div>
-                        <span>Users</span>
-                    </Link>
-                </li>
+                {
+                    user && user.mainrole === "superadmin" && (
+                        <li>
+                            <Link to={'/admin/users'}>
+                                <div className="icons">
+                                    <FaUserAlt />
+                                </div>
+                                <span>Users</span>
+                            </Link>
+                        </li>
+                    )
+                }
 
                 <li>
                     <Link to={'/account'}>
