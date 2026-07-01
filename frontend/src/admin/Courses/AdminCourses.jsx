@@ -14,6 +14,10 @@ const categories = [
     "Data Science",
     "Cyber Security",
     "Artificial Intelligence",
+    "Digital Marketing",
+    "Communication Skills",
+    "Graphic Designing",
+    "Video Animation",
 ]
 
 const AdminCourses = ({ user }) => {

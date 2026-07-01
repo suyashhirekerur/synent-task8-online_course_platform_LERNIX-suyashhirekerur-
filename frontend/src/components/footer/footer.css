@@ -1,9 +1,11 @@
 footer {
-    background-color: #8a4b8a;
-    color: white;
-    padding: 20px 0;
+    background-color: #0f172a; /* Deep Slate Blue */
+    color: #e2e8f0;
+    padding: 30px 0;
     text-align: center;
     bottom: 0;
+    border-top: 4px solid #0d9488; /* Teal Green Accent */
+    transition: all 0.3s ease-in-out;
 
     .footer-content {
         max-width: 1200px;
@@ -11,26 +13,30 @@ footer {
 
         p {
             margin: 0;
-            font-size: 14px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
         }
 
-        a{
+        a {
             text-decoration: none;
             color: inherit;
         }
 
         .social-links {
-            margin-top: 10px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
 
-            a{
-                color: white;
-                font-size: 18px;
-                margin: 0 10px;
-                text-decoration: none;
-                transition: color 0.3s ease;
+            a {
+                color: #94a3b8;
+                font-size: 22px;
+                transition: all 0.3s ease;
+                display: inline-block;
 
                 &:hover {
-                    color: #f5f5f5;
+                    color: #0d9488; /* Teal Green */
+                    transform: translateY(-3px) scale(1.1);
                 }
             }
         }

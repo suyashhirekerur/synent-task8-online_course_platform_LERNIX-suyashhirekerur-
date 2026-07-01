@@ -1,6 +1,9 @@
+import React, { useState } from 'react';
 import './testimonials.css';
 
 const Testimonials = () => {
+    const [activeCard, setActiveCard] = useState(null);
+
     const testimonialsData = [
         {
             id: 1,
@@ -66,13 +69,18 @@ const Testimonials = () => {
                 "https://i.pravatar.cc/150?img=53",
         },
     ];
+
     return (
         <section className="testimonials">
             <h2>What our Students Say?</h2>
             <div className="testimonials-cards">
                 {
                     testimonialsData.map((e) => (
-                        <div className="testimonial-card" key={e.id}>
+                        <div 
+                            className={`testimonial-card ${activeCard === e.id ? 'wavy-border' : ''}`} 
+                            key={e.id}
+                            onClick={() => setActiveCard(activeCard === e.id ? null : e.id)}
+                        >
                             <div className="student-img">
                                 <img src={e.image} alt="" />
                             </div>
