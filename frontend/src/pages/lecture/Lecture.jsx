@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import "./lecture.css";
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { server } from "../../main"
 import Loading from '../../components/loading/Loading';
@@ -14,7 +14,6 @@ const Lecture = ({ user }) => {
     const [lecLoading, setLecLoading] = useState(false)
     const [show, setShow] = useState(false);
     const params = useParams();
-    const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [video, setVideo] = useState("");

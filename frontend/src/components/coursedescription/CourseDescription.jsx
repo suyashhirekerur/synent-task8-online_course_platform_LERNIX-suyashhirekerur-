@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import "./courseDescription.css";
 import { useParams } from 'react-router-dom';
 import { CourseData } from '../../context/CourseContext';
