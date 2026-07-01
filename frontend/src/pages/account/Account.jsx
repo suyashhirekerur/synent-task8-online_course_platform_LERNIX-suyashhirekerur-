@@ -1,4 +1,4 @@
-import React from 'react'
+
 import './account.css';
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
@@ -6,7 +6,7 @@ import { UserData } from "../../context/User.jsx"
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const Account = (user) => {
+const Account = ({ user }) => {
     const { setIsAuth, setUser } = UserData();
 
     const navigate = useNavigate();
@@ -30,14 +30,14 @@ const Account = (user) => {
                             <strong>Email - {user.email}</strong>
                         </p>
 
-                        <button onClick={() => navigate(`${user._id}/dashboard`)} className="common-btn">
+                        <button onClick={() => navigate(`/${user._id}/dashboard`)} className="common-btn">
                             <RiDashboardHorizontalFill />
                             Dashboard
                         </button>
                         <br />
 
                         {
-                            user.role === "admin" && (
+                            (user.role === "admin" || user.mainrole === "superadmin") && (
                                 <button onClick={() => navigate(`/admin/dashboard`)} className="common-btn">
                                     <RiDashboardHorizontalFill />
                                     Admin Dashboard

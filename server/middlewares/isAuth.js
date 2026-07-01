@@ -30,7 +30,7 @@ export const isAuth = async (req, res, next) => {
 
 export const isAdmin = (req, res, next) => {
     try {
-        if (req.user.role !== "admin") return res.status(403).json({
+        if (req.user.role !== "admin" && req.user.mainrole !== "superadmin") return res.status(403).json({
             message: "You are not admin",
         });
 

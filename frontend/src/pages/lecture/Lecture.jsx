@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import "./lecture.css";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { server } from "../../main"
 import Loading from '../../components/loading/Loading';
@@ -21,8 +21,6 @@ const Lecture = ({ user }) => {
     const [videoPrev, setVideoPrev] = useState("");
     const [btnLoading, setBtnLoading] = useState(false);
 
-    if (user && user.role !== "admin" && !user.subscription.includes(params.id)) return navigate("/");
-
     async function fetchLectures() {
         try {
             const { data } = await axios.get(`${server}/api/lectures/${params.id}`, {
@@ -41,7 +39,7 @@ const Lecture = ({ user }) => {
 
     async function fetchLecture(id) {
         try {
-            const { data } = await axios.get(`${server}/api/lecture/${params.id}`, {
+            const { data } = await axios.get(`${server}/api/lecture/${id}`, {
                 headers: {
                     token: localStorage.getItem("token"),
                 },
@@ -76,7 +74,7 @@ const Lecture = ({ user }) => {
         myForm.append("file", video);
 
         try {
-            const { data } = await axios.post(`${server}/api/course/${params.id}`, myForm, {
+            const { data } = await axios.post(`${server}/api/courses/${params.id}`, myForm, {
                 headers: {
                     token: localStorage.getItem("token"),
                 },
@@ -159,6 +157,11 @@ const Lecture = ({ user }) => {
         fetchLectures();
         fetchProgress();
     }, [])
+
+    if (user && user.role !== "admin" && user.mainrole !== "superadmin" && !user.subscription.includes(params.id)) {
+        return <Navigate to="/" />;
+    }
+
     return (
         <>
             {loading ? <Loading /> : <>
@@ -192,7 +195,7 @@ const Lecture = ({ user }) => {
                     </div>
                     <div className="right">
                         {
-                            user && user.role === "admin" && (
+                            user && (user.role === "admin" || user.mainrole === "superadmin") && (
                                 <button className="common-btn" onClick={() => setShow(!show)}>
                                     {show ? "Close" : "Add Lecture"}
                                 </button>
@@ -246,7 +249,7 @@ const Lecture = ({ user }) => {
                         }
 
                         {
-                            lectures && lectures.length > 0 ? lecture.map((e, i) => (
+                            lectures && lectures.length > 0 ? lectures.map((e, i) => (
                                 <>
                                     <div onClick={() => fetchLecture(e._id)}
                                         key={i}
@@ -254,7 +257,8 @@ const Lecture = ({ user }) => {
                                             }`}
                                     >
                                         {i + 1}. {e.title}{" "}
-                                        {progres &&
+                                        {progress &&
+                                            progress[0] &&
                                             progress[0].completedLectures.includes(e._id) && (
                                                 <span
                                                     style={
@@ -271,7 +275,7 @@ const Lecture = ({ user }) => {
                                             )}
                                     </div>
                                     {
-                                        user && user.role === "admin" && (
+                                        user && (user.role === "admin" || user.mainrole === "superadmin") && (
                                             <button
                                                 className="common-btn"
                                                 style={{ backgroundColor: "red" }}

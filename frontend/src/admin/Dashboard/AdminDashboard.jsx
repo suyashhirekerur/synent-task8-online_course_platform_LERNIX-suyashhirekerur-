@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigate, useEffect } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, Navigate } from 'react-router-dom'
 import Layout from '../Utils/Layout'
 import axios from 'axios'
 import { server } from '../../main'
@@ -8,7 +8,6 @@ import './dashboard.css';
 const AdminDashboard = ({ user }) => {
     const navigate = useNavigate()
 
-    if (user && user.role !== "admin") return navigate("/");
 
     const [stats, setStats] = useState([])
 
@@ -31,6 +30,8 @@ const AdminDashboard = ({ user }) => {
     useEffect(()=>{
         fetchStats();
     }, []);
+
+    if (user && user.role !== "admin" && user.mainrole !== "superadmin") return <Navigate to="/" />;
 
     return (
         <div>

@@ -25,9 +25,8 @@ const schema = new mongoose.Schema({
     subscription: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Courses",
-    },
+    }],
     resetPasswordExpire: Date,
-    ],
 }, {
     timestamp: true,
 });

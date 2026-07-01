@@ -1,6 +1,6 @@
-import React from 'react'
+
 import "./paymentSuccess.css";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const PaymentSuccess = ({ user }) => {
     const params = useParams()
@@ -10,7 +10,7 @@ const PaymentSuccess = ({ user }) => {
             <h2>Payment Successful</h2>
             <p>Your course subscription has been activated</p>
             <p>Reference Number - {params.id}</p>
-            <link to={`${user._id}/dashboard`} className="common-btn">Go To Dashboard</link>
+            <Link to={`/${user._id}/dashboard`} className="common-btn">Go To Dashboard</Link>
             </div>
             }
         </div>

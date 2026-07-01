@@ -27,7 +27,7 @@ export const fetchLectures = TryCatch(async (req, res) => {
 
     const user = await User.findById(req.user._id)
 
-    if (user.role === "admin") {
+    if (user.role === "admin" || user.mainrole === "superadmin") {
         return res.json({ lectures });
     };
 
@@ -42,7 +42,7 @@ export const fetchLecture = TryCatch(async (req, res) => {
     const lecture = await Lecture.findById(req.params.id);
     const user = await User.findById(req.user._id)
 
-    if (user.role === "admin") {
+    if (user.role === "admin" || user.mainrole === "superadmin") {
         return res.json({ lecture });
     };
 
@@ -62,7 +62,7 @@ export const getMyCourses = TryCatch(async (req, res) => {
 });
 
 export const checkOut = TryCatch(async (req, res) => {
-    const user = await user.findById(req.user._id);
+    const user = await User.findById(req.user._id);
 
     const course = await Courses.findById(req.params.id)
 
@@ -91,7 +91,7 @@ export const paymentVerification = TryCatch(async (req, res) => {
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
-    const expectedSignature = crypto.createHmac("abc256", process.env.Razorpay_Secret).update(body).digest("hex");
+    const expectedSignature = crypto.createHmac("sha256", process.env.Razorpay_Secret).update(body).digest("hex");
 
     const isAuthentic = expectedSignature === razorpay_signature;
 

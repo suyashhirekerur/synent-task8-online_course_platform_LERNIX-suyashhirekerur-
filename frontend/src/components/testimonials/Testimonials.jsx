@@ -1,43 +1,69 @@
-import React from 'react';
 import './testimonials.css';
 
 const Testimonials = () => {
     const testimonialsData = [
         {
             id: 1,
-            name: "John Doe",
-            position: "Student",
+            name: "Narendra Shah",
+            position: "Software Engineer",
             message:
-                "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
+                "The well-structured curriculum and practical exercises completely transformed my coding journey. I secured my first tech role just weeks after completing the program!",
             image:
-                "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
+                "https://i.pravatar.cc/150?img=11",
         },
         {
             id: 2,
-            name: "Jane Smith",
-            position: "Student",
+            name: "Priya Sharma",
+            position: "Data Science Student",
             message:
-                "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
+                "I appreciate how complex topics are broken down into bite-sized, digestible lessons. The hands-on projects gave me the confidence to tackle real-world problems.",
             image:
-                "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                "https://i.pravatar.cc/150?img=5",
         },
         {
             id: 3,
-            name: "John Doe",
-            position: "Student",
+            name: "Michael Chen",
+            position: "Freelance Designer",
             message:
-                "This platform helped me learn so effectively. The courses are amazing and the instructors are top-notch.",
+                "An incredible learning experience from start to finish. The instructors are clearly experts in their fields, and the community support is unparalleled.",
             image:
-                "https://th.bing.com/th?q=Current+Bachelor&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247",
+                "https://i.pravatar.cc/150?img=8",
         },
         {
             id: 4,
-            name: "Jane Smith",
-            position: "Student",
+            name: "Sarah Williams",
+            position: "Marketing Analyst",
             message:
-                "I've learned more here than in any other place. The interactive lessons and quizzes make learning enjoyable.",
+                "The platform is incredibly user-friendly, and the pacing is perfect for busy professionals. I was able to upskill on my own schedule without feeling overwhelmed.",
             image:
-                "https://th.bing.com/th/id/OIP.GKAiW3oc2TWXVEeZAzrWOAHaJF?w=135&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+                "https://i.pravatar.cc/150?img=43",
+        },
+        {
+            id: 5,
+            name: "David Garcia",
+            position: "College Student",
+            message:
+                "Easily the best investment I've made in my education. The interactive quizzes reinforced my learning, and the lifetime access means I can always review concepts.",
+            image:
+                "https://i.pravatar.cc/150?img=12",
+        },
+        {
+            id: 6,
+            name: "Emily Clark",
+            position: "UX Researcher",
+            message:
+                "A phenomenal resource! The insights I gained here helped me land a promotion. The material is consistently updated and highly relevant.",
+            image:
+                "https://i.pravatar.cc/150?img=32",
+        },
+        {
+            id: 7,
+            name: "James Wilson",
+            position: "Entrepreneur",
+            message:
+                "These courses gave me the exact skills I needed to launch my startup. It's rare to find such high-quality instruction all in one place.",
+            image:
+                "https://i.pravatar.cc/150?img=53",
         },
     ];
     return (
@@ -65,4 +91,4 @@ const Testimonials = () => {
     )
 }
 
-export default Testimonials
+export default Testimonials;

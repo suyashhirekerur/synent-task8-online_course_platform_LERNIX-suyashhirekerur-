@@ -38,23 +38,7 @@ export const UserContextProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        let cancelled = false;
-        const fallbackTimer = setTimeout(() => {
-            if (!cancelled) {
-                setIsAuth(false);
-                setUser(null);
-                setloading(false);
-            }
-        }, 1500);
-
-        if (!cancelled) {
-            fetchUser();
-        }
-
-        return () => {
-            cancelled = true;
-            clearTimeout(fallbackTimer);
-        };
+        fetchUser();
     }, []);
 
     async function loginUser(email, password, navigate, fetchMyCourse) {

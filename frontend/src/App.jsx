@@ -1,6 +1,6 @@
-import React from 'react';
 import "./App.css";
 import { Routes, Route } from "react-router-dom"
+import Loading from './components/loading/Loading';
 import Home from './pages/home/Home.jsx';
 import Header from './components/header/Header';
 import Login from './pages/auth/Login.jsx';
@@ -23,7 +23,11 @@ import ForgotPassword from "./pages/auth/ForgotPassword.jsx";
 import ResetPassword from "./pages/auth/ResetPassword.jsx"
 
 const App = () => {
-  const { isAuth, user } = UserData();
+  const { isAuth, user, loading } = UserData();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

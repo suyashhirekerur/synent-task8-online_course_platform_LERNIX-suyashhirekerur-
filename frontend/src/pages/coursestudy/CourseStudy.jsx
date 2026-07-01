@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import "./courseStudy.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CourseData } from "../../context/CourseContext"
@@ -9,11 +9,15 @@ const CourseStudy = ({ user }) => {
 
     const { fetchCourse, course } = CourseData()
 
-    if (user && user.role !== "admin" && !user.subscription.includes(params.id)) return navigate("/");
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCourse(params.id)
     }, []);
+
+    if (user && user.role !== "admin" && user.mainrole !== "superadmin" && !user.subscription.includes(params.id)) {
+        return navigate("/");
+    }
     return (
         <>
             {course && <div className="course-study-page">

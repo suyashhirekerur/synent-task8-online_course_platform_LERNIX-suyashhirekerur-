@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import './auth.css';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast'
@@ -25,7 +25,7 @@ const ForgotPassword = () => {
         }
     }
     return (
-        <div className="auth-page">
+        <div className="auth-name">
             <div className="auth-form">
                 <h2>Forgot Password</h2>
                 <form onSubmit={handleSubmit}>

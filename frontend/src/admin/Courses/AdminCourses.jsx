@@ -1,11 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import Layout from '../Utils/Layout'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { CourseData } from '../../context/CourseContext'
 import CourseCard from '../../components/coursecard/CourseCard'
 import "./admincourses.css";
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import { server } from '../../main'
 
 const categories = [
     "Web Development",
@@ -16,9 +17,8 @@ const categories = [
 ]
 
 const AdminCourses = ({ user }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    if (user && user.role !== "admin") return navigate("/");
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -59,7 +59,7 @@ const AdminCourses = ({ user }) => {
         myForm.append("file", image);
 
         try {
-            const { data } = await axios.post(`${server}/api/course/new`, myForm, {
+            const { data } = await axios.post(`${server}/api/courses/new`, myForm, {
                 headers: {
                     token: localStorage.getItem("token"),
                 },
@@ -73,12 +73,17 @@ const AdminCourses = ({ user }) => {
             setCreatedBy("");
             setPrice("");
             setCategory("");
+            toast.success(data.message);
+            setBtnLoading(false);
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error.response.data.message || "Something went wrong");
+            setBtnLoading(false);
         }
     }
 
-    
+
+    if (user && user.role !== "admin" && user.mainrole !== "superadmin") return <Navigate to="/" />;
+
     return (
         <Layout>
             <div className="admin-courses">
@@ -129,7 +134,7 @@ const AdminCourses = ({ user }) => {
                             />
 
                             <select value={category} onChange={e => setCategory(e.target.value)}>
-                                <option value={ }>Select Category</option>
+                                <option value={""}>Select Category</option>
                                 {
                                     categories.map((e) => (
                                         <option value={e} key={e}>

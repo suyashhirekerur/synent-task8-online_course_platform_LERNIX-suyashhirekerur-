@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { UserContextProvider } from './context/User.jsx'
 import { CourseContextProvider } from './context/CourseContext.jsx'
 
+export const server = 'http://localhost:3000';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>

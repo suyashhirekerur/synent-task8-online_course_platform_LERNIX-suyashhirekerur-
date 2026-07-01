@@ -1,10 +1,10 @@
-import React from 'react'
 import "./coursecard.css";
 import { UserData } from "../../context/User"
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { CourseData } from '../../context/CourseContext';
-
+import axios from 'axios';
+import { server } from '../../main';
 const CourseCard = ({ course }) => {
   const navigate = useNavigate()
   const { user, isAuth } = UserData()
@@ -37,10 +37,10 @@ const CourseCard = ({ course }) => {
       <p>Price - ₹{course.price}</p>
       {
         isAuth ? (<>
-          {user && user.role !== "admin" ? (
+          {user && user.role !== "admin" && user.mainrole !== "superadmin" ? (
             <>
               {
-                user.subscription.includes(course._id) ? (
+                user.subscription?.includes(course._id) ? (
                   <button onClick={() => navigate(`/course/study/${course._id}`)} className="common-btn">Study</button>
                 ) : (
                   <button onClick={() => navigate(`/course/${course._id}`)} className="common-btn">Get Started</button>
@@ -60,7 +60,7 @@ const CourseCard = ({ course }) => {
       <br />
 
       {
-        user && user.role === "admin" && (
+        user && (user.role === "admin" || user.mainrole === "superadmin") && (
           <button
             onClick={() => deleteHandler(course._id)}
             className="common-btn"

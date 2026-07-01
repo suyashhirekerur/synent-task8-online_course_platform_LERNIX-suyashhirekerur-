@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import '.auth.css';
+import { useState } from 'react'
+import './auth.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast'
@@ -19,7 +19,7 @@ const ResetPassword = () => {
             const { data } = await axios.post(
                 `${server}/api/user/reset?token=${params.token}`,
                 {
-                    email,
+                    password,
                 }
             )
 
@@ -32,7 +32,7 @@ const ResetPassword = () => {
         }
     }
     return (
-        <div className="auth-page">
+        <div className="auth-name">
             <div className="auth-form">
                 <h2>Reset Password</h2>
                 <form onSubmit={handleSubmit}>
