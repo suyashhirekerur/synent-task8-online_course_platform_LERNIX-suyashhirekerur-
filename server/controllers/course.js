@@ -127,12 +127,20 @@ export const paymentVerification = TryCatch(async (req, res) => {
 });
 
 export const addProgress = TryCatch(async (req, res) => {
-    const progress = await Progress.findOne({
+    let progress = await Progress.findOne({
         user: req.user._id,
         course: req.query.course,
     });
 
     const { lectureId } = req.query;
+
+    if (!progress) {
+        progress = new Progress({
+            user: req.user._id,
+            course: req.query.course,
+            completedLectures: [],
+        });
+    }
 
     if (progress.completedLectures.includes(lectureId)) {
         return res.json({
@@ -155,13 +163,24 @@ export const getYourProgress = TryCatch(async (req, res) => {
         course: req.query.course,
     });
 
-    if (!progress) return res.status(404).json({ message: "null" });
+    if (!progress || progress.length === 0) {
+        const allLectures = (await Lecture.find({ course: req.query.course })).length;
+        return res.json({
+            courseProgressPercentage: 0,
+            completedLectures: 0,
+            allLectures,
+            progress: [{ completedLectures: [] }],
+        });
+    }
 
     const allLectures = (await Lecture.find({ course: req.query.course })).length;
 
     const completedLectures = progress[0].completedLectures.length;
 
-    const courseProgressPercentage = ((completedLectures * 100) / allLectures);
+    let courseProgressPercentage = 0;
+    if (allLectures > 0) {
+        courseProgressPercentage = ((completedLectures * 100) / allLectures);
+    }
 
     res.json({
         courseProgressPercentage,

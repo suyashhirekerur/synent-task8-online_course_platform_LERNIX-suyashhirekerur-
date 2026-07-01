@@ -52,16 +52,7 @@
     .particles li:nth-child(14) { left: 30%; width: 55px; height: 55px; animation-delay: -11s; animation-duration: 16s; }
     .particles li:nth-child(15) { left: 80%; width: 75px; height: 75px; animation-delay: -13s; }
 
-    @keyframes floatUp {
-        0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-1200px) rotate(720deg);
-            opacity: 0;
-        }
-    }
+
 
     .home-content {
         max-width: 800px;
@@ -117,5 +108,16 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-1200px) rotate(720deg);
+        opacity: 0;
     }
 }

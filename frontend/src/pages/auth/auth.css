@@ -17,16 +17,6 @@
         transform: translateY(20px);
     }
 
-    @keyframes floatIn {
-        from {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-    }
 
     h2 {
         font-size: 24px;
@@ -67,5 +57,16 @@
              /* Optional styling if label follows input, though in React it usually precedes */
              color: #0d9488;
         }
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
