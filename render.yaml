@@ -1,0 +1,43 @@
+services:
+  # ── Backend (Node.js / Express API) ──
+  - type: web
+    name: lernix-api
+    runtime: node
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: MONGODB_URI
+        sync: false          # You will set this manually in the Render dashboard
+      - key: JWT_SECRET
+        sync: false
+      - key: Razorpay_Key
+        sync: false
+      - key: Razorpay_Secret
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+
+  # ── Frontend (React + Vite Static Site) ──
+  - type: web
+    name: lernix-frontend
+    runtime: static
+    region: oregon
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
