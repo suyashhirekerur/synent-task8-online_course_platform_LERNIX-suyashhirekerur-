@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import Layout from '../Utils/Layout'
 import axios from 'axios'
-import { server } from '../../main'
+import { server } from '../../config'
 import './dashboard.css';
 
 const AdminDashboard = ({ user }) => {

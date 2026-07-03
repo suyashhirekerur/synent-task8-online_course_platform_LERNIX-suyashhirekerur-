@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import "./lecture.css";
 import { useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { server } from "../../main"
+import { server } from "../../config"
 import Loading from '../../components/loading/Loading';
 import toast from 'react-hot-toast';
 import { LuBookOpenCheck } from "react-icons/lu";

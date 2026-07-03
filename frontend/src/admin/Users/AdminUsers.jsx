@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import "./users.css";
 import { useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { server } from '../../main';
+import { server } from '../../config';
 import Layout from '../Utils/Layout';
 import toast from 'react-hot-toast';
 

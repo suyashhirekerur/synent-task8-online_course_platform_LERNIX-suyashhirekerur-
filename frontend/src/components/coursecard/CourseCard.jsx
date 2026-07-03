@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { CourseData } from '../../context/CourseContext';
 import axios from 'axios';
-import { server } from '../../main';
+import { server } from '../../config';
 const CourseCard = ({ course }) => {
   const navigate = useNavigate()
   const { user, isAuth } = UserData()

@@ -27,6 +27,8 @@ services:
         sync: false
       - key: SMTP_PASS
         sync: false
+      - key: frontendurl
+        value: https://lernix-frontend.onrender.com
 
   # ── Frontend (React + Vite Static Site) ──
   - type: web
@@ -35,3 +37,6 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    envVars:
+      - key: VITE_SERVER_URL
+        value: https://lernix-api.onrender.com
