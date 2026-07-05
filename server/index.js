@@ -20,11 +20,13 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: [
-        "https://lernix-an-online-course-platform.onrender.com",
+        "http://localhost:5173", // Keep this for local development!
+        // "https://your-live-frontend-url-goes-here.com", // Replace with your Vercel or Render frontend URL
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
+
 
 const port = process.env.PORT;
 
