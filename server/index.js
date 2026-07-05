@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: [
-        "https://lernix-frontend.onrender.com",
+        "http://localhost:5173",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
