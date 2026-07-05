@@ -20,8 +20,8 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: [
-        "http://localhost:5173", // Keep this for local development!
-        // "https://your-live-frontend-url-goes-here.com", // Replace with your Vercel or Render frontend URL
+        "http://localhost:5173", 
+        "https://lernix-online-course-platform.vercel.app/",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
